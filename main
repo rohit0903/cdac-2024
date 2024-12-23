@@ -1,4 +1,21 @@
-List<UserBean> listUsers =dao.getAllUsers();
-        	request.setAttribute("users", listUsers);    
-        	RequestDispatcher rd = request.getRequestDispatcher("/listUser.jsp");
-            rd.forward(request, response);
+<table border="1">
+	<tr>
+		<th>Id</th>
+		<th>First Name</th>
+		<th>Last Name</th>
+	</tr>
+	<tr>
+		<%
+			for (UserBean user : userList) {
+		%>
+		<td><%=user.getId()%></td>
+		<td><%=user.getfName()%></td>
+		<td><%=user.getlName()%></td>
+		<td> <a href="EditUserHandler?userId=<%= user.getId() %>" > Click to update </a> </td>
+		<td> <a href="DeleteUserHandler?userId=<%= user.getId() %>" > Click to delete </a> </td>
+		
+	</tr>
+	<%
+		}
+	%>
+</table>
