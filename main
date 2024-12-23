@@ -1,19 +1,4 @@
-public List<UserBean> getAllUsers() {
-        List<UserBean> users = new ArrayList<>();
-        try {
-        	String sql = "SELECT * FROM users";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                UserBean userBean = new UserBean();
-                userBean.setId(rs.getInt("userid"));
-                userBean.setfName(rs.getString("firstname"));
-                userBean.setlName(rs.getString("lastname"));                             
-                users.add(userBean);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return users;
-    }
+List<UserBean> listUsers =dao.getAllUsers();
+        	request.setAttribute("users", listUsers);    
+        	RequestDispatcher rd = request.getRequestDispatcher("/listUser.jsp");
+            rd.forward(request, response);
