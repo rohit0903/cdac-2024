@@ -1,16 +1,19 @@
-public void addUser(UserBean userBean) {
+public List<UserBean> getAllUsers() {
+        List<UserBean> users = new ArrayList<>();
         try {
-        	Connection conn = ConnectionProvider.getConnection();
-        	String sql = "INSERT INTO users(userid, firstname,lastname)" +
-    		" VALUES (?, ?, ? )";
+        	String sql = "SELECT * FROM users";
             PreparedStatement ps = conn.prepareStatement(sql);
-            
-            ps.setInt(1, userBean.getId());
-            ps.setString(2, userBean.getfName());
-            ps.setString(3, userBean.getlName());            
-            ps.executeUpdate();
-
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                UserBean userBean = new UserBean();
+                userBean.setId(rs.getInt("userid"));
+                userBean.setfName(rs.getString("firstname"));
+                userBean.setlName(rs.getString("lastname"));                             
+                users.add(userBean);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return users;
     }
