@@ -1,1 +1,16 @@
-https://dev.mysql.com/downloads/file/?id=523568
+public void addUser(UserBean userBean) {
+        try {
+        	Connection conn = ConnectionProvider.getConnection();
+        	String sql = "INSERT INTO users(userid, firstname,lastname)" +
+    		" VALUES (?, ?, ? )";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setInt(1, userBean.getId());
+            ps.setString(2, userBean.getfName());
+            ps.setString(3, userBean.getlName());            
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
