@@ -1,31 +1,19 @@
 public List<Employee> getAllEmployees() {
-		List<Employee> employee = jdbcTemplate.query("select * from employees", new EmployeeRowMapper());
-		return employee;
+		return employeeDao.getAllEmployees();
 	}
 
 	public Employee findEmployeeById(int id) {
-		String query = "SELECT * FROM employees WHERE employee_id = ?";
-		RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<Employee>(Employee.class);
-		Employee employee = jdbcTemplate.queryForObject(query, rowMapper, id);
-
-		return employee;
+		return employeeDao.findEmployeeById(id);
 	}
 
 	public void addEmployee(Employee employee) {
-		String query = "INSERT INTO employees(employee_id, first_name, last_name, email, phone, job_title) VALUES(?, ?, ?, ?, ?, ?)";
-		jdbcTemplate.update(query, employee.getEmployeeId(), employee.getFirstName(), employee.getLastName(),
-				employee.getEmail(), employee.getPhone(), employee.getJobTitle());
-
+		employeeDao.addEmployee(employee);
 	}
 
 	public void updateEmployee(Employee employee) {
-		String query = "UPDATE employees SET first_name=?, last_name=?, email=?, phone=?, job_title=? WHERE employee_id=?";
-		jdbcTemplate.update(query, employee.getFirstName(), employee.getLastName(), employee.getEmail(),
-				employee.getPhone(), employee.getJobTitle(), employee.getEmployeeId());
-
+		employeeDao.updateEmployee(employee);
 	}
 
 	public void deleteEmployee(int id) {
-		String query = "DELETE FROM employees WHERE employee_id=?";
-		jdbcTemplate.update(query, id);
+		employeeDao.deleteEmployee(id);
 	}
