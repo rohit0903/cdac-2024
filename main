@@ -1,6 +1,49 @@
-spring.datasource.url=jdbc:mysql://localhost:3306/springboot
-spring.datasource.username=root
-spring.datasource.password=root
+@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+	public ModelAndView getAllEmployees() {
+		ModelAndView model = new ModelAndView();
+		List<Employee> list = employeeService.getAllEmployees();
 
-spring.mvc.view.prefix=/WEB-INF/jsp/
-spring.mvc.view.suffix=.jsp
+		model.addObject("employee_list", list);
+		model.setViewName("employee_list");
+		return model;
+	}
+	
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+	public ModelAndView editEmployee(@PathVariable int id) {
+		ModelAndView model = new ModelAndView();
+
+		Employee employee = employeeService.findEmployeeById(id);
+		model.addObject("employeeForm", employee);
+
+		model.setViewName("employee_form");
+		return model;
+	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public ModelAndView addEmployee() {
+		ModelAndView model = new ModelAndView();
+
+		Employee employee = new Employee();
+		model.addObject("employeeForm", employee);
+
+		model.setViewName("employee_form");
+		return model;
+	}
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public ModelAndView saveOrUpdate(@ModelAttribute("employeeForm") Employee employee) {
+		if (employee.getEmployeeId() != null) {
+			employeeService.updateEmployee(employee);
+		} else {
+			employeeService.addEmployee(employee);
+		}
+
+		return new ModelAndView("redirect:/employee/list");
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public ModelAndView deleteEmployee(@PathVariable("id") int id) {
+		employeeService.deleteEmployee(id);
+
+		return new ModelAndView("redirect:/employee/list");
+	}
