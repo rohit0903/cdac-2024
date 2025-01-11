@@ -1,12 +1,9 @@
-public void removeUser(int userId) {
-        try {
-        	Connection conn = ConnectionProvider.getConnection();
-        	String sql = "DELETE FROM users WHERE userid=?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, userId);
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-      }
+CREATE TABLE  `springboot`.`employees` (
+		  `employee_id` int(11) NOT NULL auto_increment,
+		  `first_name` varchar(45) NOT NULL default '',
+		  `last_name` varchar(45) NOT NULL default '',
+		  `email` varchar(45) NOT NULL default '',
+		  `phone` varchar(20) NOT NULL default '',
+		  `job_title` varchar(100) NOT NULL default '',
+		  PRIMARY KEY  (`employee_id`)
+		) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
