@@ -1,20 +1,31 @@
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import org.springframework.jdbc.core.RowMapper;
-
-public class EmployeeRowMapper implements RowMapper<Employee> {
-
-	@Override
-	public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Employee employee = new Employee();
-		employee.setEmployeeId(rs.getInt("employee_id"));
-		employee.setFirstName(rs.getString("first_name"));
-		employee.setLastName(rs.getString("last_name"));
-		employee.setEmail(rs.getString("email"));
-		employee.setPhone(rs.getString("phone"));
-		employee.setJobTitle(rs.getString("job_title"));
+public List<Employee> getAllEmployees() {
+		List<Employee> employee = jdbcTemplate.query("select * from employees", new EmployeeRowMapper());
 		return employee;
 	}
 
-}
+	public Employee findEmployeeById(int id) {
+		String query = "SELECT * FROM employees WHERE employee_id = ?";
+		RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<Employee>(Employee.class);
+		Employee employee = jdbcTemplate.queryForObject(query, rowMapper, id);
+
+		return employee;
+	}
+
+	public void addEmployee(Employee employee) {
+		String query = "INSERT INTO employees(employee_id, first_name, last_name, email, phone, job_title) VALUES(?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(query, employee.getEmployeeId(), employee.getFirstName(), employee.getLastName(),
+				employee.getEmail(), employee.getPhone(), employee.getJobTitle());
+
+	}
+
+	public void updateEmployee(Employee employee) {
+		String query = "UPDATE employees SET first_name=?, last_name=?, email=?, phone=?, job_title=? WHERE employee_id=?";
+		jdbcTemplate.update(query, employee.getFirstName(), employee.getLastName(), employee.getEmail(),
+				employee.getPhone(), employee.getJobTitle(), employee.getEmployeeId());
+
+	}
+
+	public void deleteEmployee(int id) {
+		String query = "DELETE FROM employees WHERE employee_id=?";
+		jdbcTemplate.update(query, id);
+	}
