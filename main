@@ -1,31 +1,6 @@
-import java.util.List;
+spring.datasource.url=jdbc:mysql://localhost:3306/springboot
+spring.datasource.username=root
+spring.datasource.password=root
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service
-public class EmployeeServiceImpl {
-
-	@Autowired
-	private EmployeeDaoImpl employeeDao;
-
-	public List<Employee> getAllEmployees() {
-		return employeeDao.getAllEmployees();
-	}
-
-	public Employee findEmployeeById(int id) {
-		return employeeDao.findEmployeeById(id);
-	}
-
-	public void addEmployee(Employee employee) {
-		employeeDao.addEmployee(employee);
-	}
-
-	public void updateEmployee(Employee employee) {
-		employeeDao.updateEmployee(employee);
-	}
-
-	public void deleteEmployee(int id) {
-		employeeDao.deleteEmployee(id);
-	}
-}
+spring.mvc.view.prefix=/WEB-INF/jsp/
+spring.mvc.view.suffix=.jsp
