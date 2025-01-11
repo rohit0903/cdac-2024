@@ -1,4 +1,15 @@
-public List<Employee> getAllEmployees() {
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class EmployeeServiceImpl {
+
+	@Autowired
+	private EmployeeDaoImpl employeeDao;
+
+	public List<Employee> getAllEmployees() {
 		return employeeDao.getAllEmployees();
 	}
 
@@ -17,3 +28,4 @@ public List<Employee> getAllEmployees() {
 	public void deleteEmployee(int id) {
 		employeeDao.deleteEmployee(id);
 	}
+}
