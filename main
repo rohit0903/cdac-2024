@@ -1,56 +1,20 @@
-public class Employee {
-	private Integer employeeId;
-	private String firstName;
-	private String lastName;
-	private String email;
-	private String phone;
-	private String jobTitle;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-	public Integer getEmployeeId() {
-		return employeeId;
+import org.springframework.jdbc.core.RowMapper;
+
+public class EmployeeRowMapper implements RowMapper<Employee> {
+
+	@Override
+	public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Employee employee = new Employee();
+		employee.setEmployeeId(rs.getInt("employee_id"));
+		employee.setFirstName(rs.getString("first_name"));
+		employee.setLastName(rs.getString("last_name"));
+		employee.setEmail(rs.getString("email"));
+		employee.setPhone(rs.getString("phone"));
+		employee.setJobTitle(rs.getString("job_title"));
+		return employee;
 	}
 
-	public void setEmployeeId(Integer employeeId) {
-		this.employeeId = employeeId;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getJobTitle() {
-		return jobTitle;
-	}
-
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
 }
